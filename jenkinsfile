@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+    tools {
+        maven 'Maven 3.8.1'
+        jdk 'Java 11'
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/<your-username>/books-api-bdd.git'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn clean test'
+            }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'target/cucumber-report.html', allowEmptyArchive: true
+        }
+    }
+}
