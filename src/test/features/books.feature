@@ -7,3 +7,8 @@ Feature: Book API Verification
     And the response size should be less than 10 KB
     And the response should contain atleast one book with type "fiction"
 
+  Scenario: Validate error handling with invalid endpoint
+    Given the Books API is available
+    When I hit an invalid books endpoint
+    Then I should receive a 400 status code
+

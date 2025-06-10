@@ -2,9 +2,12 @@ package stepdefinitions;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.Assert;
+import static io.restassured.RestAssured.when;
+import static org.junit.Assert.assertEquals;
 
 public class BooksStepDefinitions {
     private Response response;
@@ -15,6 +18,21 @@ public class BooksStepDefinitions {
         response = RestAssured.given()
                 .when()
                 .get(BASE_URL + "/Books");
+    }
+
+    @Given("the Books API is available")
+    public void theBooksAPIIsAvailable() {
+        RestAssured.baseURI = BASE_URL;
+    }
+
+    @When("I hit an invalid books endpoint")
+    public void i_hit_an_invalid_books_endpoint() {
+        response = when().get("/books?type=invalid"); // Triggers 400
+    }
+
+    @Then("I should receive a 400 status code")
+    public void i_should_receive_a_400_status_code() {
+        assertEquals(400, response.getStatusCode());
     }
 
     @Then("the status code should be {int}")
@@ -41,5 +59,4 @@ public class BooksStepDefinitions {
         Assert.assertTrue("Response should contain at least one book with type " + bookType,
                 response.getBody().asString().contains("\"type\":\"" + bookType + "\""));
     }
-    
 } 
