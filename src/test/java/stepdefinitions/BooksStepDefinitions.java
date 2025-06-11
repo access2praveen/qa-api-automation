@@ -15,6 +15,7 @@ public class BooksStepDefinitions {
         response = RestAssured.given()
                 .when()
                 .get(BASE_URL + "/Books");
+                System.out.println("Response status code: " + response.getStatusCode()); // Debugging: Print status code
     }
 
     @Then("the status code should be {int}")
@@ -32,6 +33,7 @@ public class BooksStepDefinitions {
     public void verifyResponseSize(int maxSizeKB) {
         int responseSizeBytes = response.getBody().asString().getBytes().length;
         int maxSizeBytes = maxSizeKB * 1024;
+        System.out.println("Actual response size: " + responseSizeBytes + " bytes"); // Debugging: Response size
         Assert.assertTrue("Response size should be less than " + maxSizeKB + "KB",
                 responseSizeBytes < maxSizeBytes);
     }
