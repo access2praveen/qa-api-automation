@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/<your-username>/books-api-bdd.git'
+                git 'https://github.com/access2praveen/qa-api-automation.git'
             }
         }
         stage('Test') {
