@@ -32,6 +32,7 @@ public class BooksStepDefinitions {
 
     @Then("I should receive a 400 status code")
     public void i_should_receive_a_400_status_code() {
+        System.out.println("Test 400  response"); 
         assertEquals(400, response.getStatusCode());
     }
 
